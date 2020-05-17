@@ -17,6 +17,9 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
+#        #include "portaudio.h"のエラー対処
+    - name: Install portaudio19
+      run: sudo apt install portaudio19-dev
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
