@@ -12,7 +12,7 @@ CHUNK = 2 ** 11
 RECORD_SECONDS = 3
 
 try:
-    WAVE_FILE = sys.argv[1]
+    WAVE_FILE = sys.argv[1]  # ファイル名をコマンドライン引数で指定
 except:
     print('File name is required as an argument.')
     sys.exit(1)
