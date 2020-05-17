@@ -4,6 +4,8 @@ import pyaudio
 import wave
 import sys
 import time
+import librosa.display
+import matplotlib.pyplot as plt
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
@@ -24,6 +26,17 @@ frames = []
 def callback(in_data, frame_count, time_info, status):
     frames.append(in_data)
     return None, pyaudio.paContinue
+
+
+# 波形の生成
+def make_wave(file_name):
+    y, sr = librosa.load(file_name)  # 音声データの読み込み(戻り値はオーディオ時系列,サンプリングレート)
+
+    recording_sound, _ = librosa.effects.trim(y)  # yをの60db以下の値を無音部分とみなしトリミング
+    librosa.display.waveplot(recording_sound, sr=sr)
+
+    plt.savefig("wave.png")
+    plt.show()
 
 
 stream = audio.open(
@@ -60,3 +73,6 @@ if __name__ == '__main__':
     wf.setframerate(RATE)
     wf.writeframes(b''.join(frames))
     wf.close()
+
+    # 波形の生成用メッソドを呼び出し
+    make_wave(sys.argv[1])
